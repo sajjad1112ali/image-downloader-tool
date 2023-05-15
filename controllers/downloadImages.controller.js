@@ -80,8 +80,6 @@ const downloadImages = async (req) => {
     });
 
     const arrayCount = Array(parseInt(imagesCount)).fill(0);
-    console.log(imagesCount)
-    console.log(arrayCount)
     const imagesPromise = await Promise.all(
       arrayCount.map(async (ar) => {
         const page = await browser.newPage();
@@ -99,11 +97,6 @@ const downloadImages = async (req) => {
     console.log(`direcoty = ${direcoty}`)
 
     if (!direcoty) return false;
-
-    console.log(
-      "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<sdadada>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-    );
-    console.log(`direcoty = ${direcoty}`)
 
     await Promise.all(imagesSrcArr.map((image) => {
       let filename = `${direcoty}/${randomIntFromInterval(

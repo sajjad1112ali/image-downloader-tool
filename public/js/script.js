@@ -22,11 +22,12 @@ $("#configurationForm").submit(function (event) {
   fetch("http://127.0.0.1:4000/download-images", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result)
       const folderName = result.downloaded;
       const dirName = folderName.substring(8, folderName.length);
 
-      $("#downloadImages").attr("href", `http://127.0.0.1:4000/${dirName}/package`);
+      $("#downloadImages").attr("href", `http://127.0.0.1:4000/${dirName}/package`).click();
+      $("#downloadImages")[0].click();
+
       $('#configurationForm').trigger("reset");
       if (result.success) $("#successMessage").removeClass('d-none');
       $("#submitBtn").attr("disabled", false)
