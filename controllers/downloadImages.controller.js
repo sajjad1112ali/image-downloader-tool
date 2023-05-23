@@ -2,9 +2,9 @@ const puppeteer = require("puppeteer");
 const fetch = require("node-fetch");
 
 const fs = require("fs");
-const zlib = require('zlib');
-const archiver = require('archiver');
-const rimraf = require('rimraf');
+const zlib = require("zlib");
+const archiver = require("archiver");
+const rimraf = require("rimraf");
 var zipper = require("zip-local");
 
 async function saveImageToDisk(url, filename) {
@@ -29,13 +29,11 @@ async function createDirectory(min, max) {
         console.error(err);
         resolve(false);
       } else {
-        console.log('Folder created successfully');
+        console.log("Folder created successfully");
         resolve(dir);
-  
       }
     });
-  })
- 
+  });
 }
 
 function makeid(length) {
@@ -51,19 +49,25 @@ function makeid(length) {
   return result;
 }
 function zipFolder(dir) {
-  zipper.zip(dir, function(error, zipped) {
-
-    if(!error) {
-        zipped.compress(); 
-        var buff = zipped.memory(); 
-        zipped.save(`${dir}/package`, function(error) {
-            if(!error) {
-                console.log("saved successfully !");
-            }
-            console.log(error)
+  return new Promise((resolve, reject) => {
+    zipper.zip(dir, function (error, zipped) {
+      if (!error) {
+        zipped.compress();
+        var buff = zipped.memory();
+        zipped.save(`${dir}/package`, function (error) {
+          if (!error) {
+            resolve("saved successfully !")
+            console.log("saved successfully !");
+          }
+          else {
+            console.log(error);
+            reject(false)
+          }
+         
         });
-    }
-});
+      }
+    });
+  });
 }
 
 const downloadImages = async (req) => {
@@ -90,17 +94,16 @@ const downloadImages = async (req) => {
     );
     const imagesSrcArr = imagesPromise.map((ar) => ar[0]);
     const direcoty = await createDirectory();
-    console.log(`direcoty = ${direcoty}`)
-
     if (!direcoty) return false;
 
-    await Promise.all(imagesSrcArr.map((image) => {
-      let filename = `${direcoty}/${randomIntFromInterval(
-        1,
-        100
-      )}_${makeid(10)}_${Date.now()}.jpg`;
-      return saveImageToDisk(image, filename);
-    }));
+    await Promise.all(
+      imagesSrcArr.map(async (image) => {
+        let filename = `${direcoty}/${randomIntFromInterval(1, 100)}_${makeid(
+          10
+        )}_${Date.now()}.jpg`;
+        await saveImageToDisk(image, filename);
+      })
+    );
 
     await browser.close();
     // await archiveAdnDownloadFolder(direcoty);

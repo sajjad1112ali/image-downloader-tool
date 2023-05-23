@@ -16,9 +16,17 @@ app.get('/', (req, res) => {
 })
 app.post('/download-images', async (req, res) => {
   const result = await downloadImagesController.downloadImages(req)
-  await downloadImagesController.zipFolder(result);
+ // await downloadImagesController.zipFolder(result);
   res.send({ downloaded: result });
 })
+
+app.post('/save-locally', async (req, res) => {
+  const {folderName} = req.body;
+ // const result = await downloadImagesController.downloadImages(req)
+  await downloadImagesController.zipFolder(folderName);
+  res.send({ downloaded: folderName });
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
