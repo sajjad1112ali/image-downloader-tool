@@ -51,15 +51,11 @@ function makeid(length) {
   return result;
 }
 function zipFolder(dir) {
-  console.log(`dir = ${dir}`)
   zipper.zip(dir, function(error, zipped) {
 
     if(!error) {
-        zipped.compress(); // compress before exporting
-
-        var buff = zipped.memory(); // get the zipped file as a Buffer
-
-        // or save the zipped file to disk
+        zipped.compress(); 
+        var buff = zipped.memory(); 
         zipped.save(`${dir}/package`, function(error) {
             if(!error) {
                 console.log("saved successfully !");

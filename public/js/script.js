@@ -1,5 +1,28 @@
+function isValidInput(input, type) {
+  const validValues = {
+    imagesCount: 1,
+    dimensions: 150,
+  }
+  return input !== '' && parseFloat(input) >= validValues[type];
+}
+
+function validateInput(){
+  const imagesCount = $("#imagesCount").val();
+  const height = $("#height").val();
+  const width = $("#width").val();
+  if (!isValidInput(imagesCount, "imagesCount") || !isValidInput(height, "dimensions") || !isValidInput(width, "dimensions")) return false
+  return {
+    imagesCount,
+    height,
+    width,
+  };
+}
 $("#configurationForm").submit(function (event) {
   event.preventDefault();
+  if (!validateInput()) {
+    alert("Kindly provide valid input");
+    return false;
+  }
   $("#submitBtn").attr("disabled", true)
 
   let posting = {
