@@ -9,4 +9,5 @@ The Image Downloader Tool is a Node.js application that allows you to download m
 - Clone the repository or download the source code.
 - Open a terminal or command prompt and navigate to the project directory.
 - Run the following command to install the dependencies `npm install`
+- Run the following command to start the image downloader `npm start`
 - Go to `http://127.0.0.1:4000`
