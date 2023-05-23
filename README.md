@@ -5,7 +5,7 @@ The Image Downloader Tool is a Node.js application that allows you to download m
 - Download multiple images simultaneously
 - Specify the desired height and width for the downloaded images
 
-##Installation
+## Installation
 - Clone the repository or download the source code.
 - Open a terminal or command prompt and navigate to the project directory.
 - Run the following command to install the dependencies `npm install`
